@@ -27,7 +27,6 @@ class FocusLight {
         PercentTotal percentTotal;
         static Freenove_ESP32_WS2812 FitaLED;
         static const int QUANTIDADE_PESSOAS = 10;
-        int count = 0;
         int emotions[7] = {};
         int emotionPercent[7] = {};
         int emotionPercentTotal[3];

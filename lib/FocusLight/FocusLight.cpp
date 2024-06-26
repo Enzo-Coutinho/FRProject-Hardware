@@ -8,6 +8,7 @@ FocusLight::FocusLight() {
 }
 
 void FocusLight::calcule() {
+  int count = 0;
   while(Serial.available()) {
     emotions[count] = Serial.read();
     count += 1;
