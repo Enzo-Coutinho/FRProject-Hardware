@@ -18,9 +18,9 @@ void FocusLight::calcule() {
     emotionPercent[i] = emotions[i] / QUANTIDADE_PESSOAS;
   }
 
-  percentTotal.emotionTotal[R] = (emotionPercent[ANGRY] + emotionPercent[SAD]);
-  percentTotal.emotionTotal[G] = (emotionPercent[HAPPY] + emotionPercent[NEUTRAL]);
-  percentTotal.emotionTotal[B] = (emotionPercent[DISGUST] + emotionPercent[FEAR] + emotionPercent[6]);
+  percentTotal.emotionTotal[R] = (emotionPercent[ANGRY] + emotionPercent[SAD]) * 255;
+  percentTotal.emotionTotal[G] = (emotionPercent[HAPPY] + emotionPercent[NEUTRAL]) * 255;
+  percentTotal.emotionTotal[B] = (emotionPercent[DISGUST] + emotionPercent[FEAR] + emotionPercent[6]) * 255;
 }
 
 PercentTotal FocusLight::getPercentTotal() {
