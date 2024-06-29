@@ -9,11 +9,12 @@ struct PercentTotal {
 
 enum Emotions {
     ANGRY = 0,
-    HAPPY = 1,
+    HAPPY = 3,
     FEAR = 2,
-    SAD = 3,
-    DISGUST = 4,
-    NEUTRAL = 5,
+    SAD = 5,
+    DISGUST = 1,
+    NEUTRAL = 4,
+    SURPRISE = 6
 };
 
 enum Colors {
@@ -26,19 +27,21 @@ class FocusLight {
     private:
         PercentTotal percentTotal;
         static Freenove_ESP32_WS2812 FitaLED;
-        static const int QUANTIDADE_PESSOAS = 10;
+        static const int QUANTIDADE_PESSOAS = 1;
         int emotions[7] = {};
-        int emotionPercent[7] = {};
+        double emotionPercent[7] = {};
         int emotionPercentTotal[3];
         static const int CHANNEL = 0;
         static const int PINO = 14;
         static const int LED_COUNT = 30;
     public:
-        void calcule();
+        FocusLight();
+        int* readSerial();
+        void sendSerial(String data);
         PercentTotal getPercentTotal();
         void setColor();
         void rainbow();
-        FocusLight();
+        int * calcule(int emotionsQuant[]);
 };
 
 #endif
