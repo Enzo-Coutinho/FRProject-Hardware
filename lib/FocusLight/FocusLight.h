@@ -38,10 +38,9 @@ class FocusLight {
         FocusLight();
         int* readSerial();
         void sendSerial(String data);
-        PercentTotal getPercentTotal();
         void setColor();
         void rainbow();
-        int * calcule(int emotionsQuant[]);
+        int* calcule(int emotionsQuant[]);
 };
 
 #endif

@@ -20,10 +20,6 @@ int * FocusLight::calcule(int emotionsQuant[]) {
   return percentTotal.emotionTotal;
 }
 
-PercentTotal FocusLight::getPercentTotal() {
-    return percentTotal;
-}
-
 int * FocusLight::readSerial() {
   for(int i = 0; i < 7; i++) {
     emotions[i] = Serial.read();
