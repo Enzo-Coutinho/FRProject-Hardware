@@ -1,18 +1,20 @@
-#include <Arduino.h>
+#include "Arduino.h"
 #include "FocusLight.h"
 
-FocusLight controller = FocusLight();
+FocusLight controller;
 
 void setup() {
   Serial.begin(115200);
+  controller.init();
 }
 
 void loop() {
-  int* data = controller.readSerial();
-  int* output = controller.calcule(data);
-  for(int k = 0; k<3; k++) {
-    Serial.print(output[k]);
+  controller.readSerial();
+  int* color = controller.calcule();
+  for(int i = 0; i<3; i++) {
+    Serial.print(color[i]);
   }
   Serial.println("");
+  controller.setColor(color);
   delay(100);
 }

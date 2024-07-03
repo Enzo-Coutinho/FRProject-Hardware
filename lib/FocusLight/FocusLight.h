@@ -1,20 +1,11 @@
 #ifndef FocusLight_h
 #define FocusLight_h
-#include "Freenove_WS2812_Lib_for_ESP32.h"
+#include <Adafruit_NeoPixel.h>
 #include "Arduino.h"
+#include "ArduinoJson.h"
 
 struct PercentTotal {
     int emotionTotal[3];
-};
-
-enum Emotions {
-    ANGRY = 0,
-    HAPPY = 3,
-    FEAR = 2,
-    SAD = 5,
-    DISGUST = 1,
-    NEUTRAL = 4,
-    SURPRISE = 6
 };
 
 enum Colors {
@@ -25,22 +16,25 @@ enum Colors {
 
 class FocusLight {
     private:
+        const char* emotes[5] = { "happy", "neutral", "sad", "tired", "angry"};
+        double count[5];
         PercentTotal percentTotal;
-        static Freenove_ESP32_WS2812 FitaLED;
         static const int QUANTIDADE_PESSOAS = 1;
-        int emotions[7] = {};
-        double emotionPercent[7] = {};
         int emotionPercentTotal[3];
-        static const int CHANNEL = 0;
+        int CHANNEL = 0;
         static const int PINO = 14;
         static const int LED_COUNT = 30;
     public:
-        FocusLight();
-        int* readSerial();
+        static Adafruit_NeoPixel ws2812b;
+        JsonDocument doc;
+        FocusLight(void);
+        void readSerial();
+        void init();
         void sendSerial(String data);
-        void setColor();
+        void setColor(int color[]);
+        void setOneColor(int color[], int leds=1);
         void rainbow();
-        int* calcule(int emotionsQuant[]);
+        int* calcule();
 };
 
 #endif
