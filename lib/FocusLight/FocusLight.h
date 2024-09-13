@@ -1,6 +1,6 @@
 #ifndef FocusLight_h
 #define FocusLight_h
-#include <Adafruit_NeoPixel.h>
+#include "Freenove_WS2812_Lib_for_ESP32.h"
 #include "Arduino.h"
 #include "ArduinoJson.h"
 
@@ -21,11 +21,11 @@ class FocusLight {
         PercentTotal percentTotal;
         static const int QUANTIDADE_PESSOAS = 1;
         int emotionPercentTotal[3];
-        int CHANNEL = 0;
-        static const int PINO = 14;
-        static const int LED_COUNT = 30;
+        static const int CHANNEL = 0;
+        static const int PINO = 27;
+        static const int LED_COUNT = 61;
     public:
-        static Adafruit_NeoPixel ws2812b;
+        static Freenove_ESP32_WS2812 ws2812b;
         JsonDocument doc;
         FocusLight(void);
         void readSerial();

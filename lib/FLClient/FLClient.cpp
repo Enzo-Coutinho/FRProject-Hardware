@@ -61,24 +61,22 @@ int * FLClient::getEmotes() {
         int code = client.GET();
         log_d("Código de resposta HTTP", code);
                 // Get the raw and the decoded stream
-        Stream& rawStream = client.getStream();
-        ChunkDecodingStream decodedStream(client.getStream());
+            Stream& rawStream = client.getStream();
+            ChunkDecodingStream decodedStream(client.getStream());
 
-        // Choose the right stream depending on the Transfer-Encoding header
-        Stream& response =
-            client.header("Transfer-Encoding") == "chunked" ? decodedStream : rawStream;
+            // Choose the right stream depending on the Transfer-Encoding header
+            Stream& response =
+                client.header("Transfer-Encoding") == "chunked" ? decodedStream : rawStream;
 
-        // Parse response
-        JsonDocument doc;
-        deserializeJson(doc, response);
-
+            // Parse response
+            JsonDocument doc;
+            deserializeJson(doc, response);
+            
         colors[0] = doc["r"];
         colors[1] = doc["g"];
         colors[2] = doc["b"];
-
         // Read values
-        client.end();
-
-        return colors;
+    client.end();
     }
+    return colors;
 }

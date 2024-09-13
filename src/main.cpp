@@ -8,15 +8,16 @@ FocusLight controller;
 void setup() {
   Serial.begin(115200);
   client.initWiFi();
-  //controller.init();
+  controller.init();
 }
 
 void loop() {
-  //controller.readSerial();
   int* color = client.getEmotes();
-  //controller.setColor(color);
-  for(int i = 0; i <= 2; i++) {
-    Serial.println(color[i]);
+  for(int i = 0; i<3; i++) {
+    Serial.print(color[i]);
+    Serial.print(" ");
   }
+  Serial.println("");
+  controller.setColor(color);
   delay(500);
 }

@@ -1,6 +1,6 @@
 #include "FocusLight.h"
 
-Adafruit_NeoPixel FocusLight::ws2812b(LED_COUNT, PINO, NEO_GRB + NEO_KHZ800);
+Freenove_ESP32_WS2812 FocusLight::ws2812b(LED_COUNT, PINO, CHANNEL, TYPE_GRB);
 
 FocusLight::FocusLight() {
 
@@ -27,15 +27,9 @@ void FocusLight::sendSerial(String data) {
 }
 
 void FocusLight::setColor(int color[]) {
-  for(int i = 0; i < LED_COUNT; i++) {
-    ws2812b.setPixelColor(i, ws2812b.Color(color[R], color[G], color[B]));
-    ws2812b.show();
-  }
+  ws2812b.setAllLedsColor(color[0], color[1], color[2]);
 }
 
 void FocusLight::setOneColor(int color[], int leds) {
-    ws2812b.setPixelColor(leds, ws2812b.Color(color[R], color[G], color[B]));
-    ws2812b.show();
-    delay(1000);
-    ws2812b.clear();
+
 }
