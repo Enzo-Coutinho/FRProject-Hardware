@@ -8,13 +8,15 @@
 
 class FLClient {
     private:
-        const char* ssid = "CLARO_849";
-        const char* passoword = "rinoceronte10";
-        const char* url = "http://192.168.0.105:5000/emotions";
+        const char* ssid = "FocusLight";
+        const char* password = "123456789";
+        const char* url = "http://192.168.4.2:5000/emotions";
         TaskHandle_t reconnectHandler;
         static void events(WiFiEvent_t event);
         static void reconnect(void * arg);
+        void setChannel();
         HTTPClient client;
+        static bool clientStatus;
         int colors[];
     public:
         void initWiFi();

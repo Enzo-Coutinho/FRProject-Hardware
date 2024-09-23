@@ -1,10 +1,34 @@
 #include "FLClient.h"
 
+bool FLClient::clientStatus = false;
+
 void FLClient::initWiFi() {
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, passoword);
+    setChannel();
     WiFi.onEvent(events);
-    // xTaskCreatePinnedToCore(reconnect, "Reconnect", 4000, NULL, 2, &reconnectHandler, tskNO_AFFINITY);
+}
+
+void FLClient::setChannel() {
+  int n = WiFi.scanNetworks();
+  if (n == 0) {
+    log_d("no networks found");
+  } else {
+      int canais[n];
+      int canaisFix[14] = {};
+      log_d("networks found");
+      for (int i = 0; i < n; ++i) {
+          canais[i] = WiFi.channel(i);
+          canaisFix[canais[i]]++;
+      }
+      int low = 20;
+      int channel = 1;
+      for(int i = 1; i < 14; i++) {
+        if(canaisFix[i] < low) {
+          channel = i;
+          low = canaisFix[i];
+        }
+      }
+  WiFi.softAP(ssid, password, channel);
+  }
 }
 
 void FLClient::events(WiFiEvent_t event){
@@ -39,7 +63,21 @@ void FLClient::events(WiFiEvent_t event){
         case ARDUINO_EVENT_WIFI_STA_LOST_IP:
             Serial.println("Lost IP address and IP address is reset to 0");
             break;
-        default: break;
+        case ARDUINO_EVENT_WIFI_AP_STACONNECTED:
+            Serial.println("Client AP connected");
+            break;
+        case ARDUINO_EVENT_WIFI_AP_STAIPASSIGNED:
+            clientStatus = true;
+            Serial.println("IP assigned");
+            break;
+        case ARDUINO_EVENT_WIFI_AP_STADISCONNECTED:
+            clientStatus = false;
+            Serial.println("Client disconnected");
+            break;
+        case ARDUINO_EVENT_WIFI_AP_START:
+            break;
+        case ARDUINO_EVENT_WIFI_AP_STOP:
+            break;
     }
 }
 
@@ -55,7 +93,7 @@ void FLClient::reconnect(void * arg) {
 }
 
 int * FLClient::getEmotes() {
-    if(WiFi.status() == WL_CONNECTED) {
+    if(clientStatus) {
         client.begin(url);
 
         int code = client.GET();
