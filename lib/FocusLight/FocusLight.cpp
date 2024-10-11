@@ -8,6 +8,7 @@ FocusLight::FocusLight() {
 
 void FocusLight::init() {
   ws2812b.begin();
+  ws2812b.setBrightness(255);
 }
 
 int * FocusLight::calcule() {
