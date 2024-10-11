@@ -4,6 +4,7 @@ bool FLClient::clientStatus = false;
 
 void FLClient::initWiFi() {
     //setChannel();
+    WiFi.mode(WIFI_STA);
     WiFi.onEvent(events);
     WiFi.begin(ssid, password);
 }
